@@ -1,6 +1,10 @@
 package com.superio.mybudget.model;
 
+import com.superio.mybudget.db.DatabaseHandler;
+import com.superio.mybudget.db.ExpensesTbl;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kumar_thangaraj on 01/06/17.
@@ -30,16 +34,16 @@ public class Expenses {
     public void setAmount(float amount){
         this.amount = amount;
     }
-    public void setUser(String userId){
+    public void setUserId(String userId){
         this.userId = userId;
     }
     public Date getDate(){
         return this.date;
     }
-    public String getUser(){
+    public String getUserId(){
         return this.userId;
     }
-    public float getAmout(){
+    public float getAmount(){
         return this.amount;
     }
     public String getDetail(){
@@ -50,5 +54,18 @@ public class Expenses {
     }
     public String toString(){
         return "UserId: "+this.userId+"; Date: "+this.date+"; Detail: "+this.detail+"; Amount: "+this.amount+";";
+    }
+
+    public void store(DatabaseHandler dbHandler){
+        ExpensesTbl tbl = new ExpensesTbl();
+        tbl.addRecord(this,dbHandler);
+    }
+    public List<Expenses> getAllRecords(DatabaseHandler dbHandler){
+        ExpensesTbl tbl = new ExpensesTbl();
+        return tbl.getAllRecords(this,dbHandler);
+    }
+    public List<Expenses> getRecords(DatabaseHandler dbHandler, String query){
+        ExpensesTbl tbl = new ExpensesTbl();
+        return tbl.getRecords(this, dbHandler,query);
     }
 }
